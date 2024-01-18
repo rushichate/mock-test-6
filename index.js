@@ -15,7 +15,6 @@ app.get("/",(req,res)=>{
     res.json("Welcome to masai app")
 })
 app.use("/users",userRouter)
-app.use(verify)
 app.use("/employees",employeeRouter)
 
 app.listen(process.env.PORT,async()=>{

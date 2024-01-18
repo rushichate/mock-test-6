@@ -2,6 +2,7 @@
 import React from 'react';
 
 const EmployeeTable = ({ employees, onEdit, onDelete }) => {
+  console.log(employees)
   return (
     <table>
       <thead>
