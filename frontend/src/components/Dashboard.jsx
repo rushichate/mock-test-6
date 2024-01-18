@@ -17,22 +17,34 @@ const Dashboard = () => {
 
   const fetchEmployees = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/employees/');
-      setEmployees(response.data);
-    } catch (error) {
-      console.error('Error fetching employees:', error);
-    }
+        const token = localStorage.getItem('token');
+        const response = await axios.get('https://employeeapp-4l4j.onrender.com/employees/', {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : '',
+          },
+        });
+        setEmployees(response.data);
+      } catch (error) {
+        console.error('Error fetching employees:', error);
+      }
   };
 
   const handleFormSubmit = async (e, formData) => {
     e.preventDefault();
 
     try {
-      if (selectedEmployee) {
-        await axios.put(`http://localhost:8000/employees/${selectedEmployee._id}`,formData);
-      } else {
-        await axios.post('http://localhost:8000/employees/add', formData);
-      }
+        const token = localStorage.getItem('token');
+        const headers = token ? { Authorization: `Bearer ${token}` } : {};
+  
+        if (selectedEmployee) {
+          await axios.put(`https://employeeapp-4l4j.onrender.com/employees/${selectedEmployee._id}`, formData, {
+            headers,
+          });
+        } else {
+          await axios.post('https://employeeapp-4l4j.onrender.com/employees/add', formData, {
+            headers,
+          });
+        }
 
       setModalVisible(false);
       setSelectedEmployee(null);
@@ -48,8 +60,12 @@ const Dashboard = () => {
   };
 
   const handleDelete = async (id) => {
+    const token = localStorage.getItem('token');
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
     try {
-      await axios.delete(`http://localhost:8000/employees/${id}`);
+      await axios.delete(`https://employeeapp-4l4j.onrender.com/employees/${id}`,{
+        headers,
+      });
       alert("Employee Deleted")
       fetchEmployees();
     } catch (error) {

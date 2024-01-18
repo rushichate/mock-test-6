@@ -3,6 +3,7 @@ const cors = require("cors")
 const { serverConnect } = require("./backend/db")
 const { userRouter } = require("./backend/routes/user.route")
 const { employeeRouter } = require("./backend/routes/employee.route")
+const { verify } = require("./backend/middleware/authorization")
 require("dotenv").config()
 const app = express()
 
@@ -14,6 +15,7 @@ app.get("/",(req,res)=>{
     res.json("Welcome to masai app")
 })
 app.use("/users",userRouter)
+app.use(verify)
 app.use("/employees",employeeRouter)
 
 app.listen(process.env.PORT,async()=>{

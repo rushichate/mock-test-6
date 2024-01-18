@@ -13,7 +13,7 @@ function LoginSignup() {
         e.preventDefault();
         try{
             if(isLogin){
-                const res = await axios.post('http://localhost:8000/users/login',{email,password});
+                const res = await axios.post('https://employeeapp-4l4j.onrender.com/users/login',{email,password});
                 alert(res.data.message)
                 localStorage.setItem('token',res.data.token)
                 if(res.data.message === "Login Successful"){
@@ -25,7 +25,7 @@ function LoginSignup() {
                     alert("Password Not Match")
                     return
                 }
-                const res = await axios.post('http://localhost:8000/users/register',{email,password})
+                const res = await axios.post('https://employeeapp-4l4j.onrender.com/users/register',{email,password})
                 alert(res.data.message)
                 window.location.reload()
             }
